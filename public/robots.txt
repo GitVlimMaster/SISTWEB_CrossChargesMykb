@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /ticket/ 
+Disallow: /signature/
+Disallow: /hotels/

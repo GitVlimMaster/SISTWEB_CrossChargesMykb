@@ -1,0 +1,11 @@
+SEARCHLASTNAME.SLastname(`${getHotelInfo.hotelsData.ip}:${getHotelInfo.hotelsData.port}`, {
+     // linkstart: linkstart,
+     description: description,
+     postinquiry: postinquiry
+}).then(response => {
+     res.send(response);
+     WRITEINLOG.WriteLogSuccessful("Postrequest", JSON.stringify(response));
+}).catch(err => {
+     res.send(err);
+     WRITEINLOG.WriteLogError("GetHuespedLastname", err);
+ });

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /getApi/ 
+Disallow: /getDates/
+Disallow: /xmlGenerate/  

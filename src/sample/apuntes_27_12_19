@@ -1,0 +1,12 @@
+Revisar en opera como estan dados de alta los centros de consumo.
+Saber cuales son las categorias de consumo.
+Añadir un cargo en el servicio de usuario.
+(Añadir un status_charge y status_paidout)
+Añadir el DataTable para los reportes.
+Crear un historico de cada acción.
+Añadir dos usuarios master RLH y AdminSupport.
+------------------------ Generales ------------------------------------
+Realizar un cargo general.
+LLamada con RLH para que nos diga que pasa con el PMS el por que no manda una respuesta.
+--------------------------------------------------------------------
+Añadir campos de propina, iva y 

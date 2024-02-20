@@ -1,0 +1,29 @@
+<!-- 
+    Link Description:
+    Text: Estos tipos de registro se utilizan para controlar el estado del enlace. 
+    El PMS solo se abre o cierra el enlace al iniciar o detener su software. 
+    Los siguientes registros se utilizan para definir el estado actual del enlace.
+-->
+\x02<LinkDescription Date='' Time='' VerNum='1.0' />\x03
+
+<!-- 
+    Link Alive:
+    Text: El registro LinkAlive se utiliza para señalar al POS en el nivel de la capa de aplicación que el
+    El sistema PMS ahora está listo para recibir datos. NO se pueden pasar datos al PMS antes de
+    Se ha recibido el registro de LinkAlive. LinkAlive se pasa en respuesta a LinkDescription.
+    Sin embargo, como LinkAlive señala que la interfaz PMS se ha inicializado, este registro puede
+    tardan varios segundos en transmitirse después de que se haya recibido la LinkDescription.
+    Cualquier registro enviado al PMS antes de recibir el registro LinkAlive se ignora.
+-->
+\x02<LinkAlive Date='' Time='' />\x03
+
+<!-- 
+    LinkStart:
+    Text: Para verificar si la conexión sigue siendo válida (es decir, no cerrada por un componente activo
+    como un firewall), la POST puede enviar un registro de inicio de enlace
+-->
+\x02<LinkStart Date='' Time='' />\x03
+
+<!-- 
+    
+-->

@@ -1,0 +1,39 @@
+<h1>Hello World - This an example of threads</h1>
+<form class="form-message">
+    <input type="number" class="message" placeholder="ID">
+    <input type="text" class="message" placeholder="Writte a message">
+    <button type="submit">Send</button>
+</form>
+<h3>Your message</h3>
+<ul class="message_send"></ul>
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"
+  integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+  crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function(){
+        $(document).on("submit", ".form-message", function(){
+            const val = $(this).children("input[type=text]").val();
+            const thread = $(this).children("input[type=number]").val();
+            $.ajax({
+                url: "/examplethread",
+                data: {
+                    thread: thread,
+                    message: val
+                },
+                async: true,
+                dataType: "JSON",
+                type: "POST",
+                success: (data) => {
+                    console.table(data);
+                    for(let i = 0; i <= data.length; i++){
+                        if(data[i].thread == thread){
+                            $(".message_send").append(`<li>${data[i].message}</li>`);
+                        }
+                    }
+                }
+            })
+            return false;
+        });
+    });
+</script>

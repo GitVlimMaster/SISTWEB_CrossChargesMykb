@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Document title -->
+    <title>{{pageTitle}}</title>
+    <!-- Stylessheet -->
+    <link rel="stylesheet" href="{{#if backTreeDir}}../../../{{/if}}app.css">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <!-- Material icons-->
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <!-- Sweet alert -->
+    <link rel="stylesheet" href="{{#if backTreeDir}}../../../{{/if}}iziToast/dist/css/iziToast.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="{{#if backTreeDir}}../../../{{/if}}iziToast/dist/js/iziToast.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.js"></script>
+</head>
+<body class="{{bodyClass}}">
+
+    {{!-- <div class="top-warning" id="content_top_warning">
+        <div class="row">
+            <div class="col-1">
+                <span class="material-icons">warning_amber</span>
+            </div>
+            <div class="col-9">
+                <div class="content-text">
+                    <h5>Actualización Programada</h5>
+                    <p>Este sábado 24 de Abril de <b>2:00AM</b> a <b>5:00AM</b> <b>Cross Charges</b> estará en mantenimiento, por lo cual no podrán accesar a la plataforma, favor de considerarlo para su operación, muchas gracias por su compresión</p>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="content-close">
+                    <button class="close" id="close_top_warning">
+                        <i class="material-icons">close</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+    <!-- Body content -->
+    {{{body}}}
+    <!-- / Body content -->
+
+    {{!-- <script>
+        window.addEventListener("load", () => {
+            var modal = document.getElementById("content_top_warning");
+            if(localStorage.getItem("close_top_warning") != 1) {
+                modal.style.display = "inline";
+            }
+        });
+
+        var button = document.getElementById("close_top_warning");
+        button.addEventListener("click", (e) => {
+            var result = e.target.parentNode.parentElement.parentNode.parentNode.parentNode.style.display = "none";
+            if(result == "none"){
+                localStorage.setItem("close_top_warning", 1);
+            }
+        });
+    </script> --}}
+</body>
+</html>

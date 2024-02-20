@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Modals</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+        body{
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <button class="success">Cargo exitoso</button>
+    <button class=""></button>
+    <button class=""></button>
+    <script>
+        $(document).ready(function(){
+            $(".success").click(function(){
+                Swal.fire({                    
+                    type: 'success',
+                    title: 'Cargo exitoso',
+                    text: 'Folio: 250',
+                    footer: 'El cargo fue realizado corectamente a la habitación del huesped.',
+                    confirmButtonText: "Aceptar"
+                })
+            })
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+SELECT id_user, ti_name, "user", pass, type, id_hotel, active, mail, 
+       mail2, employee, consume_center, complex
+  FROM public.users;
+
+
+  SELECT *FROM public.users WHERE mail LIKE 'acauich@mayakobaexperiences.com'
+
+
+SELECT * FROM cross_charges WHERE cross_charges.revenue_center != 'Andaz' 
+								AND cross_charges.revenue_center != 'Banyan Tree' 
+								AND cross_charges.revenue_center != 'Rosewood' 
+								AND cross_charges.revenue_center != 'Fairmont'
+
+
+SELECT cross_charges.id_cross_charge,
+	cross_charges.room_number,
+	cross_charges.check_num,
+	cross_charges.first_name, cross_charges.last_name, cross_charges.revenue_center AS hotel_name_a, cat_hotels.name AS hotel_name_b, CONCAT('$ ', to_char(cross_charges.subtotal, '99,999,999,999,999,990D99')) AS subtotal, cross_charges.discount, cross_charges.service_charge, cross_charges.tax, TO_CHAR(cross_charges.date, 'dd-mm-yyyy HH24:MI') AS date, cross_charges.tip, cross_charges.revenue_center, cross_charges.consume_center, cross_charges.folio, cross_charges.waiter_id, cross_charges.ticket_image, cross_charges.signature_image, cross_charges.currency, cross_charges.status_paid, cross_charges.status_charged, cross_charges.status_sent, TO_CHAR(cross_charges.date_sent, 'dd-mm-yyyy HH24:MI') AS date_sent, cross_charges.offline_num, cross_charges.notes, CASE WHEN cross_charges.offline_num = 0 THEN 'Cargo realizado desde PMS' WHEN cross_charges.offline_num != 0 THEN 'Offline' END as offline_num 
+	FROM public.cross_charges, public.cat_hotels
+WHERE extract(month FROM date)='01'
+AND extract(year FROM date)='2022'
+AND CAST(cross_charges.id_hotel_b AS INTEGER) = CAST(cat_hotels.id_hotel AS INTEGER)
+AND CAST(cat_hotels.complex AS INTEGER) = 1
+AND cross_charges.revenue_center LIKE '%Experiencias%'
+ORDER BY id_cross_charge DESC;
+
+
+
+SELECT cross_charges.id_cross_charge, cross_charges.check_num, cross_charges.room_number, cross_charges.first_name, cross_charges.last_name, cross_charges.id_hotel_b, CONCAT('$ ', to_char(cross_charges.subtotal, '99,999,999,999,999,990D99')) AS subtotal, cross_charges.discount, cross_charges.service_charge, cross_charges.tax, TO_CHAR(cross_charges.date, 'dd-mm-yyyy HH24:MI') AS date, cross_charges.tip, cross_charges.revenue_center, cross_charges.consume_center, cross_charges.folio, cross_charges.waiter_id, cross_charges.ticket_image, cross_charges.signature_image, cross_charges.currency, cross_charges.status_paid, cross_charges.status_charged, cross_charges.notes, CASE WHEN cross_charges.offline_num = 0 THEN 'Cargo realizado desde PMS' WHEN cross_charges.offline_num != 0 THEN 'Offline' END as offline_num, (SELECT cat_hotels.name FROM cat_hotels WHERE id_hotel = CAST(cross_charges.id_hotel_b AS INTEGER) LIMIT 1) AS hotel_name, cross_charges.status_sent, TO_CHAR(cross_charges.date_sent, 'dd-mm-yyyy HH24:MI') AS date_sent, cat_tipo_cambio.tipo_cambio
+FROM public.cross_charges, public.cat_hotels, public.cat_tipo_cambio
+WHERE date BETWEEN (current_date - interval '30 day')and now()
+and id_hotel_a = 17
+AND CAST(cross_charges.id_hotel_a AS INTEGER) = CAST(cat_hotels.id_hotel AS INTEGER)
+and cross_charges.exchange_rate = cat_tipo_cambio.id_tipo_cambio
+ORDER BY id_cross_charge DESC;

@@ -1,0 +1,41 @@
+<!-- content-login -->
+<div class="content-login a-intro">
+    <div class="login-card">
+        <div class="head">
+            Inicia sesión
+        </div>
+        <form class="form" id="logfrm" method="POST" action="/login">
+            <!-- input -->
+            <div class="input-st">
+                <i class="material-icons-outlined">perm_identity</i>
+                <input type="text" id="rlhusrlog23" name="username" autocomplete="off" placeholder="Nombre de usuario">
+            </div>
+            <!-- / input -->
+            <!-- input -->
+            <div class="input-st">
+                <i class="material-icons-outlined">lock</i>
+                <input type="Password" id="rlhpasslog23" autocomplete="off" name="password" placeholder="Contraseña">
+            </div>
+            <!-- / input -->
+            <!-- a -->
+            <a href="/reset">¿Olvidaste tu contraseña?</a>
+            <!-- / a -->
+            <!-- buttons -->
+            <div class="action ml-0 mr-0">
+                <button class="btn session-btn w-100" type="submit">
+                    <span class="text">Iniciar sesión</span>
+                </button>
+            </div>
+            <!-- / buttons -->
+        </form>
+    </div>
+</div>
+<!-- / content-login -->
+
+<!-- Slim jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"
+  integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+  crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="login.js"></script>

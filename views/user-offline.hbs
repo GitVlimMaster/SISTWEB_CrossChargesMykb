@@ -1,0 +1,145 @@
+<div class="loader-cover hide" id="loaderCharge">
+    <div class="content-loader">
+        <div class="loading">
+            <div class="bar">
+                <span></span>
+            </div>
+            <div class="helper-text">
+                Generando cargo...
+            </div>
+        </div>
+    </div>
+</div>
+<!-- content-primary -->
+<div class="content-primary">
+    <!-- Nav -->
+    <nav class="nav-user" style="background: url('../../../{{hotelInformation.hotelsData.name}}.jpg')">
+        <div class="icon">
+            <a href="javascript:window.history.back();"><i class="material-icons-outlined white">keyboard_arrow_left</i></a>
+        </div>
+        <div class="text a-intro" id="hotelname_" data-hotelname="{{hotelInformation.hotelsData.name}}" data-hotelid="{{hotelInformation.hotelsData.id_hotel}}" data-operaid="{{hotelInformation.hotelsData.opera_id_center}}">
+            {{hotelInformation.hotelsData.name}}
+            <p class="mini-hotel-inof-user">Este es el Hotel donde se hospeda el huésped</p>
+        </div>
+    </nav>
+    <!-- Nav -->
+    <!-- user-content -->
+    <div class="user-content">
+        <div class="row">
+            <div class="col-12 text text-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6 col-md-6 text-left">
+                            <p id="informative_room" data-room="{{roomnumber}}">
+                                Número de habitación<br>
+                                <input type="text" autocomplete="" autofocus="" class="insert-room mt-2 w-100 a-intro" value="{{roomnumber}}" placeholder="ej.405">
+                            </p>
+                        </div>
+                        <div class="col-6 col-md-6">
+                            <p id="informative_room" data-room="{{roomnumber}}">
+                                Nombre del Huesped<br>
+                                <input type="text" autocomplete="" autofocus="" class="insert-guestname mt-2 w-100 a-intro" value="" placeholder="ej. John Doe">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <form action="">
+                    <div class="container py-2">
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="text" value="{{getCurrency.currency}}" data-val="{{getCurrency.code}}" name="" class="a-intro form-control currency selectPicker border" id="currency" readonly>
+                            </div>
+                            <div class="col-6">
+                                <input type="text" value="{{consumerCat.name}}" data-val="{{consumerCat.id_category}}" class="a-intro form-control selectPicker border" id="category" name="" readonly>
+                            </div>
+                            <div class="col-6">
+                                <input type="text" value="{{consumerCenter.hotelsData.name}}" data-val="{{consumerCenter.hotelsData.opera_id_center}}" class="a-intro form-control selectPicker border" id="consumer" readonly="">
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-primary w-100 a-intro" id="addTicket">Adjuntar ticket</button>
+                                <input type="file" id="ticketFile" style="display: none;" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-12">
+                        <h4 style="margin-top: 10px;">Total a cargar:</h4>
+                    </div>
+                    <div class="col-12">
+                        <input type="text" autocomplete="off" autofocus="" class="insert-cost w-50 a-intro" value="" placeholder="$0.00" id="import">
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <button type="button" class="btn weight-500 w-100 rounded-20 charge btn-primary p-2 purple-btn a-intro" style="font-size: 23px !important;">
+                        <span class="text">Cargar a la Habitación</span>
+                    </button>
+                    <p class="mt-2 text-secondary">Presiona el botón para realizar el cargo</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / user-content -->
+</div>
+
+<!-- Modal imagen preview -->
+<div class="modal-img hide" id="modal_img_preview">
+    <div class="header" id="close_modal_img">
+        <i class="material-icons" id="close-modal">close</i>
+    </div>
+    <div class="body">
+        <img src="../../../banner.jpg" id="imgPreviewModal" alt="modal overall img">
+    </div>
+</div>
+<!-- / maodal imagen preview -->
+
+<!-- Image preview -->
+<div class="preview-img hide">
+    <img id="ticketPreview" src="" style="width: 204px; heigth: 136px;" alt="img preview">
+</div>
+<!-- / image preview -->
+
+<!-- Modal signature -->
+<div class="modal fade" id="modal_notes" tabindex="-1" role="dialog" aria-labelledby="SignatureModal"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Agregar notas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <h1 class="notes-amount">$500 MNX</h1>
+                    <p class="text-secondary">Este es el monto a pagar</p>
+                </div>
+                <div class="w-100">
+                    <textarea class="form-control w-100" placeholder="Escribe alguna nota sobre el cargo..." id="charges_info" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-success" id="save_charges" data-usr="{{userLogged.id_user}}" data-dismiss="modal">Autorizar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / modal signature -->
+
+<!-- Slim jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"
+  integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+  crossorigin="anonymous"></script>
+
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Signature -->
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+
+<!-- Mask input -->
+<script src="https://unpkg.com/imask@6.6.1/dist/imask.js"></script>
+<!-- Controllers -->
+<script src="../../../charge-offline.js"></script>

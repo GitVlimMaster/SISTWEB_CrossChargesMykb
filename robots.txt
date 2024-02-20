@@ -1,0 +1,11 @@
+User-agent: * 
+Disallow: /login/ 
+Disallow: /user/ 
+Disallow: /reset/ 
+Disallow: /public/ 
+Disallow: /controller/ 
+Disallow: /lib/ 
+Disallow: /views/ 
+Disallow: /*.js$ 
+Disallow: /*.jpg$
+Disallow: /*.png$ 

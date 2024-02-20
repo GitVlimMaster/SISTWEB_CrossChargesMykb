@@ -1,0 +1,672 @@
+<div class="loader-cover hide" id="loaderCharge">
+    <div class="content-loader">
+        <div class="loading">
+            <div class="bar">
+                <span></span>
+            </div>
+            <div class="helper-text">
+                Generando cargo...
+            </div>
+        </div>
+    </div>
+</div>
+<!-- content-primary -->
+<div class="content-primary">
+    <!-- Nav -->
+    <nav class="nav-user" style="background: url('../../../{{hotelInformation.hotelsData.name}}.jpg')">
+        <div class="icon">
+            <a href="javascript:window.history.back();"><i
+                    class="material-icons-outlined white">keyboard_arrow_left</i></a>
+        </div>
+        <div class="text a-intro" id="hotelname_" data-hotelname="{{hotelInformation.hotelsData.name}}"
+            data-hotelid="{{hotelInformation.hotelsData.id_hotel}}"
+            data-operaid="{{hotelInformation.hotelsData.opera_id_center}}">
+            {{hotelInformation.hotelsData.name}}
+            <p class="mini-hotel-inof-user">Este es el Hotel donde se hospeda el huésped</p>
+        </div>
+    </nav>
+    <!-- Nav -->
+    <!-- user-content -->
+    <div class="user-content">
+        {{!-- <p><i class="material-icons-outlined">verified_user</i> Datos del huesped</p> --}}
+        <div class="row">
+            {{!-- <div class="col-3 avatar">
+                <div class="image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTm-XHUfj2MRkB7bSAt7FLMA0sv_E23AIMB1oDZuQtM7RngWp7R"
+                        alt="">
+                </div>
+            </div> --}}
+            <div class="col-12 text text-center">
+                <h1 id="guest_name" data-name="{{userContent.FirstName}} {{userContent.LastName}}">
+                    {{userContent.FirstName}} {{userContent.LastName}}</h1>
+                <p id="informative_room" data-room="{{userContent.RoomNumber}}">Número de habitación:
+                    {{userContent.RoomNumber}}</p>
+                {{#if userContent.NoPost}}
+                <p class="text-success">Crédito activo.</p>
+                {{else}}
+                <p class="text-danger">Crédito no activo.</p>
+                {{/if}}
+
+                <form action="">
+                    <div class="container py-2">
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="text" value="{{getCurrency.currency}}" data-val="{{getCurrency.code}}"
+                                    name="" class="a-intro form-control currency selectPicker border" id="currency"
+                                    readonly>
+                            </div>
+                            <div class="col-6">
+                                <!-- Consumer center -->
+                                <select class="a-intro form-control" id="category">
+                                    <!--<option value="0">-- Selecciona un centro de consumo --</option>-->
+                                    {{#each consumesCenters}}
+                                        <option value="{{this.name}}" data-val="{{this.id_consume_center}}">{{this.name}}</option>
+                                    {{/each}}
+                                </select>
+                                <!-- Consumer center -->
+                            </div>
+                            <div class="col-6">
+                                <input type="text" value="{{consumerCenter.hotelsData.name}}" data-val="{{consumerCenter.hotelsData.opera_id_center}}" class="a-intro form-control selectPicker border" id="consumer" readonly="">
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-primary w-100 a-intro" id="addTicket">Adjuntar ticket</button>
+                                <input type="file" id="ticketFile" style="display: none;" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-12">
+                        <h4 style="margin-top: 10px;">Total a cargar:</h4>
+                    </div>
+                    <div class="col-12">
+                        <input type="text" autocomplete="" autofocus="" class="insert-cost w-50 a-intro" value=""
+                            placeholder="$0.00" id="import">
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <button type="button"
+                        class="btn weight-500 w-100 rounded-20 charge btn-primary p-2 purple-btn a-intro"
+                        data-usr="{{userLogged.id_user}}" style="font-size: 23px !important;">
+                        <span class="text">Cargar a la Habitación</span>
+                    </button>
+                    <p class="mt-2 text-secondary">Presiona el botón para realizar el cargo</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / user-content -->
+</div>
+
+<!-- Boton Scan QR -->
+<div class="dolar-type">
+    <div class="text" id="DolarPriceUser">
+        Tipo de cambio del día: 
+        <div class="dolar">
+            $20.00 <span>USD</span>
+        </div>
+    </div>
+</div>
+{{!-- <div class="float-left-container">
+    <button type="button" class="a-intro btn btn-outline-dark btn-circle" id="btnScanQr" title="Escanear QR">
+        <i class="material-icons">qr_code_scanner</i>
+    </button>
+</div> --}}
+
+<!-- Modal Scanner -->
+<div id="modalScanQr" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Escanear código QR</h4>
+                <button type="button" class="close cerrar-modal" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body contenedor-modal">
+                <div id="loadingMessage"
+                    class="position-absolute w-100 h-100 d-flex justify-content-center align-items-center"
+                    style="top: 0; left: 0;">
+                    <div class="spinner-grow text-secondary font-weight-light" style="width: 50px; height: 50px;"
+                        role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <canvas id="canvasQR" height="225" class="rounded w-100 invisible"></canvas>
+            </div>
+            <div class="card-footer text-center">
+                <div class="app__help-text" id="divMessage">Coloca el código QR frente a la cámara</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Benefits -->
+<div id="modalBenefits" class="modal fade bd-example-modal-lg" data-backdrop="static" s role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            {{!-- <div class="modal-header">
+                <h4 class="modal-title">Beneficios asociados al usuario</h4>
+                <button type="button" class="close cerrar-modal" data-dismiss="modal">&times;</button>
+            </div> --}}
+            <div class="modal-body contenedor-modal">
+                <div class="card shadow mb-5">
+                    <div class="position-relative">
+                        <div class="bg-dark" id="backgro undUser" style="height: 125px; border-radius: 5px 5px 15px 15px;"></div>
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            <div class="position-absolute" style="top: 35px;">
+                                <img src="https://www.beneficiosrlh.com/photo_user/profile-3043720210616030640.jpg"
+                                    style="width: 160px; height: 160px;" class="img-thumbnail rounded-circle">
+                            </div>
+                            <div class="mt-5 d-flex flex-column justify-content-center align-items-center">
+                                <div class="mt-4 px-3 pt-2">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <div class="mr-2">
+                                            <h4 class="text-dark mb-0" id="userName">Jovani Cross</h3>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="material-icons text-success">check_circle</i>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <p class="text-muted" id="levelUser">Director General RLHP</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow">
+                    <div class="card-header d-sm-flex flex-wrap pb-0 border-0 bg-white">
+                        <div class="mr-auto pr-3 mb-3">
+                            <h4 class="text-black fs-20">Beneficios</h4>
+                            <p class="fs-13 mb-0 text-black">Beneficios asociados al usuario</p>
+                        </div>
+                        <div class="card-action card-tabs mt-3 mt-sm-0 mb-3">
+                            <ul class="nav nav-pills" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#beneficiosActivos" role="tab" aria-selected="true">Beneficios Activos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#beneficiosAplicados" role="tab" aria-selected="false">Beneficios Aplicados</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Card Beneficios -->
+                    <div class="card-body tab-content pt-2">
+                        <h3 class="card-title card-intro-title text-primary" id="propiedadActivos"></h3>
+                        <div class="tab-pane fade active show" id="beneficiosActivos">
+                            <div class="card border-0" id="card-beneficios-0">
+                                <img src="https://www.beneficiosrlh.com/img_cc//consumeCenter-1518920210601020637.jpg" class="shadow mb-3" style="height: 250px; border-radius: 20px;">
+                                <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+                                    <strong class="d-flex align-items-end">
+                                        <i class="material-icons mr-2">star_rate</i>
+                                        <strong class="pt-2">Hotel</strong>
+                                    </strong>
+                                    <strong class="text-muted">
+                                        Four Seasons Mexico City
+                                    </strong>
+                                </div>
+                                <div class="card-body" id="card-body-0">
+                                    <div class="custom-tab-1">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#descripcion-0">
+                                                    <i class="la la-sticky-note mr-2"></i>
+                                                    Descripción
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#condiciones-0">
+                                                    <i class="la la-list-alt mr-2"></i>
+                                                    Condiciones
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#info-0">
+                                                    <i class="la la-info-circle mr-2"></i>
+                                                    Información
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade show active" id="descripcion-0" role="tabpanel">
+                                                <div class="pt-4">
+                                                    <strong class="text-primary fs-20">
+                                                        Número de noches con "owner's rate
+                                                    </strong>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="condiciones-0">
+                                                <div class="pt-4">
+                                                    <strong class="text-primary fs-20">
+                                                        Beneficio anual no acumulable, no transferible y no monetizable.
+                                                        Sólo para uso y disfrute del Ejecutivo/Empleado. El
+                                                        Ejecutivo/Empleado
+                                                    </strong>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="info-0">
+                                                <div class="pt-4">
+                                                    <h4>Tarifa</h4>
+                                                    <p>
+                                                        N/A
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="mb-5 mt-5">
+                                                <button type="button" class="btn btn-lg btn-primary"
+                                                    onclick="applyBenefit(1,1,50)"><i class="fa fa-check"></i> Aplicar
+                                                    Beneficio</button>
+                                            </div>
+                                            <br><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Beneficios Activos -->
+
+                        <h3 class="card-title card-intro-title text-primary" id="propiedadAplicados"></h3>
+                        <!-- Beneficios Aplicados -->
+                        <div class="tab-pane" id="beneficiosAplicados">
+                            <div class="alert alert-info alert-dismissible fade show">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                                    <polygon
+                                        points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+                                    </polygon>
+                                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                                </svg>
+                                <strong>Info!</strong> No se encontraron beneficios aplicados
+                            </div>
+                        </div>
+                        <!-- Beneficios Aplicados -->
+
+                    </div>
+                    <!-- Card Beneficios -->
+
+                    <div class="card-footer">
+                        <div class="col-12 d-flex justify-content-center">
+                            <button class="btn btn-danger btn-lg" id="terminar" onclick="finishValidation()">
+                                <i class="fa fa-close"></i> Finalizar proceso
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <div class="app__help-text" id="divMessage">Coloca el código QR frente a la cámara</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal imagen preview -->
+<div class="modal-img hide" id="modal_img_preview">
+    <div class="header" id="close_modal_img">
+        <i class="material-icons" id="close-modal">close</i>
+    </div>
+    <div class="body">
+        <img src="../../../banner.jpg" id="imgPreviewModal" alt="modal overall img">
+    </div>
+</div>
+<!-- / maodal imagen preview -->
+
+<!-- Image preview -->
+<div class="preview-img hide">
+    <img id="ticketPreview" src="" style="width: 204px; heigth: 136px;" alt="img preview">
+</div>
+<!-- / image preview -->
+
+<!-- Footer actions -->
+{{!-- <div class="footer-action">
+    <button class="btn charge">Cargar a la habitación</button>
+</div> --}}
+<!-- / Footer actions -->
+
+<!-- Modal signature -->
+<div class="modal fade" id="modal_notes" tabindex="-1" role="dialog" aria-labelledby="SignatureModal"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Agregar notas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <h1 class="notes-amount">$500 MNX</h1>
+                    <p class="text-secondary">Este es el monto a pagar</p>
+                </div>
+                <div class="w-100">
+                    <textarea class="form-control w-100" placeholder="Escribe alguna nota sobre el cargo..."
+                        id="charges_info" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-success" id="save_charges"
+                    data-usr="{{userLogged.id_user}}" data-dismiss="modal">Autorizar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / modal signature -->
+
+<!-- Slim jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"
+  integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+  crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/axios@1.0.0/dist/axios.min.js"></script>
+<!-- Signature -->
+{{!--
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script> --}}
+<!-- jsQR -->
+<!-- <script src="/jsQR/jsQR.js"></script> -->
+<!-- Mask input -->
+<script src="https://unpkg.com/imask@6.6.1/dist/imask.js"></script>
+<!-- Controllers -->
+<script src="../../../charge.js"></script>
+<script>
+    /**
+     * Function: Signature functions
+     * 
+     * @author Josué Hernández
+     */
+    /*var signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
+        backgroundColor: 'rgba(255, 255, 255, 0)',
+        penColor: 'rgb(0, 0, 0)'
+    });
+    var cancelButton = document.getElementById('clear');
+    cancelButton.addEventListener('click', function (event) {
+        signaturePad.clear();
+        $("#emailcharge").val("");
+    });*/
+
+    /**
+     * Function: Input mask number
+     * 
+     * @author Josué Hernández
+     */
+    var currencyMask = IMask(
+        document.getElementById('import'), {
+        mask: '$num',
+        blocks: {
+            num: {
+                // nested masks are available!
+                mask: Number,
+                thousandsSeparator: ',',
+                mapToRadix: ['.'],
+                radix: "."
+            }
+        }
+    });
+
+    var imgobjectGlobal;
+    // Execute when start the documennt
+    $(document).ready(function () {
+
+        let api = axios.create({
+            baseURL: "https://dev.crosschargesrlh.com/rlh_ws/"
+        });
+        
+        getDolar();
+
+        function getDolar() {
+            api.get("/getActiveDolar").then(({ data }) => {
+                if(data.status == 200) {
+                    $("#DolarPriceUser").html(`Tipo de cambio del día: 
+                        <div class="dolar">
+                            $${data.message.tipo_cambio} <span>USD</span>
+                        </div>`
+                    );
+                    localStorage.setItem("id_dolar", data.message.id_tipo_cambio);
+                }
+            });
+        }
+
+        $("#addTicket").click(function () {
+            $("#ticketFile").trigger("click");
+            return false;
+        });
+        $("#ticketFile").change(function () {
+            $("#addTicket").text("Archivo Cargado");
+            iziToast.info({
+                position: "topCenter",
+                message: "El archivo fue cargado correctamente"
+            });
+
+            var ticketInput = document.querySelector("#ticketFile");
+            var ticketPreview = document.querySelector("#ticketPreview");
+
+            const archivo = ticketInput.files;
+            if (archivo.length != 0) {
+                const first = archivo[0];
+                const imgObject = URL.createObjectURL(first);
+                imgobjectGlobal = imgObject;
+                ticketPreview.src = imgobjectGlobal;
+                $("#ticketPreview").parent().removeClass("hide");
+            }
+        });
+
+        var actual_width = $(window).width();
+        if (actual_width <= 700) {
+            $("#signature-pad").attr("width", 300);
+            $("#signature-pad").attr("height", 150);
+        }
+
+        /**
+         * Function: Modal accept charge and open signature modal
+         * @author Josué Hernández
+         */
+        $(".charge").click(function () {
+            iziToast.destroy();
+            var file_con = document.querySelector("#ticketFile");
+
+            if (file_con.files.length == 0) {
+                iziToast.error({
+                    position: "center",
+                    message: "Añade el ticket"
+                });
+            }
+            else {
+                var category = $("#category");
+                var consumer = $("#consumer");
+                const ChargeData = {
+                    amount: $("#import").val(),
+                    currency: $(".currency").data("val"),
+                    category: $("#category").val(),
+                    consumer: $("#consumer").val(),
+                    logged: $(this).data("usr"),
+                    room: $("#informative_room").data("room"),
+                    hotelname: $("#hotelname_").data("hotelname"),
+                    name: $("#guest_name").data("name"),
+                    hotelid: $("#hotelname_").data("hotelid"),
+                    operaid: $("#hotelname_").data("operaid")
+                }
+
+                if (category.find(":selected").data("val") == '0') {
+                    iziToast.error({
+                        position: "center",
+                        message: "Seleccióna una categoria de consumo..."
+                    });
+                    category.addClass("is-invalid");
+                } 
+                else if (consumer.data("val") == 0) {
+                    iziToast.error({
+                        position: "center",
+                        message: "Seleccióna un centro de consumo..."
+                    });
+                    consumer.addClass("is-invalid");
+                } 
+                else {
+                    if (ChargeData.amount.length != 0) {
+                        Swal.fire({
+                            title: `${ChargeData.amount} ` + ChargeData.currency,
+                            html: "<p>Habitación " + ChargeData.room + " - " + ChargeData.hotelname + "<p><p>" + ChargeData.name + "</p>",
+                            icon: "info",
+                            type: 'warning',
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Aprobar cargo',
+                            footer: 'El cargo realizado se reflejará en la cuenta de la habitación del huesped.',
+                        }).then((result) => {
+
+                            if (result.value) {
+                                $(".notes-amount").text(`${ChargeData.amount} ${ChargeData.currency}`);
+                                $("#modal_notes").modal("show");
+                            }
+                        });
+                    } else {
+                        iziToast.error({
+                            position: "center",
+                            message: "Ingresa un monto..."
+                        });
+                        $("#import").addClass("is-invalid");
+                    }
+                }
+            }
+        });
+
+        /**
+         *
+         */
+        $(document).on("click", "#save_charges", function () {
+            try {
+                const ChargeData = {
+                    amount: $("#import").val(),
+                    currency: $(".currency").data("val"),
+                    category: $("#category").val(),
+                    consumer: $("#consumer").val(),
+                    logged: $(this).data("usr"),
+                    room: $("#informative_room").data("room"),
+                    hotelname: $("#hotelname_").data("hotelname"),
+                    name: $("#guest_name").data("name"),
+                    hotelid: $("#hotelname_").data("hotelid"),
+                    operaid: $("#hotelname_").data("operaid"),
+                    notes: $("#charges_info").val()
+                }
+                generateChargeToPOS(ChargeData);
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+
+        /**
+         * Genera y envía un cargo al POS de Opera y al backoffice.
+         * @param {Object} ChargeObject - Información que se envía al POS de Opera y al Backoffice
+         * @returns {void}
+         */
+        function generateChargeToPOS(ChargeObject) {
+            try {
+                $("#loaderCharge").removeClass("hide");
+                const file = document.getElementById("ticketFile").files[0]; // seleccionamos el archivo
+                const FR = new FileReader();
+                FR.addEventListener("load", function (e) {
+                    const ChargeInfo = {
+                        amount: ChargeObject.amount,
+                        hotelB: ChargeObject.hotelid,
+                        operaid: ChargeObject.operaid,
+                        category: ChargeObject.category,
+                        consumer: ChargeObject.consumer,
+                        currency: ChargeObject.currency,
+                        dolar_change: localStorage.getItem("id_dolar"),
+                        logged: ChargeObject.logged,
+                        notes: ChargeObject.notes,
+                        ticket: e.target.result.replace(/^data:.+;base64,/, ""),
+                        canvas: "",
+                        revenuecenter: ChargeObject.consumer,
+                    };
+
+                    const WORKER = new Worker("../../../postrequest.worker.js");
+                    WORKER.postMessage(ChargeInfo);
+                    WORKER.addEventListener("message", (e) => {
+                        const postrequest = e.data;
+                        if (postrequest == "error") {
+                            $("#loaderCharge").addClass("hide");
+                            Swal.fire({
+                                title: "Error al conectar",
+                                text: "No podemos conectar con opera",
+                                type: "error",
+                                confirmButtonText: "Aceptar",
+                                footer: "Este error ya fue enviado al administrador del hotel"
+                            });
+                        }
+                        else if (postrequest.PostAnswer._attributes.AnswerStatus != "OK") {
+                            $("#loaderCharge").addClass("hide");
+                            Swal.fire({
+                                title: "Error al hacer el cargo",
+                                text: postrequest.PostAnswer._attributes.ResponseText,
+                                type: "error",
+                                confirmButtonText: "Aceptar",
+                                footer: "Este error ya fue enviado al administrador del hotel"
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                title: "Cargo exitoso",
+                                text: postrequest.PostAnswer._attributes.ResponseText,
+                                type: "success",
+                                confirmButtonText: "Aceptar",
+                                footer:
+                                    "El cargo fue realizado correctamente a la habitación del huesped.",
+                                allowOutsideClick: false
+                            }).then(result => {
+                                if (result.value) {
+                                    location = "/";
+                                }
+                            });
+                        }
+                    });
+                });
+                FR.readAsDataURL(file);
+            }
+            catch (err) {
+                cosole.error(err);
+            }
+        }
+
+        /**
+         * Quitar la clase is-invalida cuendo el select cambie
+         * @param callback {jQuery}
+         */
+        $(document).on("change", "select", function () {
+            $(this).removeClass("is-invalid");
+        });
+
+        /**
+         * Abrir modal que contiene la imagen
+         * @returns {Void}
+         */
+        $(document).on("click", "#ticketPreview", function () {
+            $("#modal_img_preview").removeClass("hide");
+            $("#imgPreviewModal").attr("src", imgobjectGlobal);
+        });
+
+        /**
+         * Cerra el modal que contien la imagen
+         * @returns {Void}
+         */
+        $(document).on("click", "#close_modal_img", function () {
+            $("#modal_img_preview").addClass("hide");
+        });
+
+        /**
+         * Este evento se dispara cuendo se cierra un modal
+         * @returns {Void}
+         */
+        $('#modal_notes').on('hidden.bs.modal', function (e) {
+            $("#charges_info").val("");
+        });
+    });
+</script>

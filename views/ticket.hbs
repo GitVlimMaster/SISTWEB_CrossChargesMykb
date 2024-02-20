@@ -1,0 +1,105 @@
+<!-- Slim jQuery -->
+<script src="jquery-3.7.0.js"></script>
+
+<!-- Bootstrap -->
+<script src="bootstrap-4.6.0.min.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="dist/dropzone.js"></script>
+<script src="ckeditor/ckeditor.js"></script>
+
+<div style="display:none;" hidden>
+    <input type="hidden" value="{{id_hotel}}" id="hotel_variable">
+    <input type="hidden" value="{{id_usuer}}" id="usuario_variable">
+</div>
+<div style="display:none;" hidden>
+    <link rel="stylesheet" type="text/css" href="dist/dropzone.css">
+</div>
+<div class="container py-2">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title" style="margin-bottom:1px solid #000;">Alta ticket</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="text">Asunto</label>
+                        <input type="text" id="asunto" class="form-control" placeholder="" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Propiedad</label>
+                        <input type="text" id="hotel" class="form-control" placeholder="" autocomplete="off" value="{{hotel}}" disabled>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Centro de consumo</label>
+                        <select name="rol" id="comsumer_center" class="form-control">
+                            <option value="" disabled selected>-- Seleccionar un centro de consumo --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select name="nacionalidad" id="tipo" class="form-control">
+                            <option value="0" disabled selected>-- Seleccionar tipo de ticket --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Prioridad</label>
+                        <select name="nacionalidad" id="prioridad" class="form-control">
+                            <option value="" selected disabled>-- Selecciona una prioridad --</option>
+                            <option value="1">Baja</option>
+                            <option value="2">Media</option>
+                            <option value="3">Alta</option>
+                            <option value="4">Urgente</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="text">Detalle</label>
+                        <textarea id="detalle" class="form-control" placeholder="" rows="2" cols="10" autocomplete="off"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Archivos</label>
+                        <div class="dropzone dz-clickable" id="my-dropzone" name="mainFileUploader">
+                            <div class="dz-default dz-message">
+                                <button class="dz-button" type="button">
+                                    <div><i class="material-icons text-dark" style="font-size: 75px;">cloud_upload</i></div>
+                                    Arrastra los archivos aquí para subirlos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-block text-center">
+                        <button type="button" id="button" class="btn-wide rounded-20 btn btn-primary purple-btn btn-lg mb-3" style="width: 200px;"><span class="text">Levantar ticket</span></button>
+                        <a href="/" class="btn-wide rounded-20 btn btn-danger btn-lg px-5 mb-3 text-white"><span class="text">Cancelar</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="ticket.js"></script>
